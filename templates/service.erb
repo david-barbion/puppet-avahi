@@ -1,0 +1,41 @@
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+
+<!-- !!! Managed by Puppet !!! -->
+
+<service-group>
+
+<% if @replace_wildcards.nil? -%>
+  <name><%= @description %></name>
+<% else -%>
+  <name replace-wildcards="<%= @replace_wildcards ? 'yes' : 'no' %>"><%= @description %></name>
+<% end -%>
+<% @services.each do |s| -%>
+
+<%   if s.include?('protocol') -%>
+  <service protocol="<%= s['protocol'] %>">
+<%   else -%>
+  <service>
+<%   end -%>
+    <type><%= s['type'] %></type>
+<%   if s.include?('subtype') -%>
+<%     s['subtype'].each do |t| -%>
+    <subtype><%= t %></subtype>
+<%     end -%>
+<%   end -%>
+<%   if s.include?('domain-name') -%>
+    <domain-name><%= s['domain-name'] %></domain-name>
+<%   end -%>
+<%   if s.include?('host-name') -%>
+    <host-name><%= s['host-name'] %></host-name>
+<%   end -%>
+    <port><%= s['port'] %></port>
+<%   if s.include?('txt-record') -%>
+<%     s['txt-record'].each do |r| -%>
+    <txt-record><%= r %></txt-record>
+<%     end -%>
+<%   end -%>
+  </service>
+<% end -%>
+
+</service-group>
