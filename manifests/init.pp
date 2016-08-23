@@ -37,7 +37,7 @@ class avahi (
   Optional[Integer[0]]       $rlimit_data                     = $::avahi::params::rlimit_data,
   Optional[Integer[0]]       $rlimit_fsize                    = $::avahi::params::rlimit_fsize,
   Optional[Integer[0]]       $rlimit_nofile                   = $::avahi::params::rlimit_nofile,
-  Optional[Integer[0]]       $rlimit_nproc                    = $::avahi::params::rlimit_nproc,
+  Optional[Integer[2]]       $rlimit_nproc                    = $::avahi::params::rlimit_nproc,
   Optional[Integer[0]]       $rlimit_stack                    = $::avahi::params::rlimit_stack,
   Optional[Boolean]          $use_iff_running                 = undef,
   Optional[Boolean]          $use_ipv4                        = $::avahi::params::use_ipv4,
