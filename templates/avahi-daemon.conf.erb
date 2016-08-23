@@ -1,50 +1,128 @@
 # !!! Managed by Puppet !!!
 
 [server]
-#host-name=foo
-#domain-name=local
-browse-domains=0pointer.de, zeroconf.org
-use-ipv4=yes
-use-ipv6=no
-#allow-interfaces=eth0
-#deny-interfaces=eth1
-#check-response-ttl=no
-#use-iff-running=no
-#enable-dbus=yes
-#disallow-other-stacks=no
-#allow-point-to-point=no
-#cache-entries-max=4096
-#clients-max=4096
-#objects-per-client-max=1024
-#entries-per-entry-group-max=32
-ratelimit-interval-usec=1000000
-ratelimit-burst=1000
+<% if @host_name -%>
+host-name=<%= @host_name %>
+<% end -%>
+<% if @domain_name -%>
+domain-name=<%= @domain_name %>
+<% end -%>
+<% if @browse_domains -%>
+browse-domains=<%= @browse_domains.join(', ') %>
+<% end -%>
+<% unless @use_ipv4.nil? -%>
+use-ipv4=<%= @use_ipv4 ? 'yes' : 'no' %>
+<% end -%>
+<% unless @use_ipv6.nil? -%>
+use-ipv6=<%= @use_ipv6 ? 'yes' : 'no' %>
+<% end -%>
+<% if @allow_interfaces -%>
+allow-interfaces=<%= @allow_interfaces.join(', ') %>
+<% end -%>
+<% if @deny_interfaces -%>
+deny-interfaces=<%= @deny_intefaces.join(', ') %>
+<% end -%>
+<% unless @check_response_ttl.nil? -%>
+check-response-ttl=<%= @check_response_ttl ? 'yes' : 'no' %>
+<% end -%>
+<% unless @use_iff_running.nil? -%>
+use-iff-running=<%= @use_iff_running ? 'yes' : 'no' %>
+<% end -%>
+<% unless @enable_dbus.nil? -%>
+enable-dbus=<%= @enable_dbus ? 'yes' : 'no' %>
+<% end -%>
+<% unless @disallow_other_stacks.nil? -%>
+disallow-other-stacks=<%= @disallow_other_stacks ? 'yes' : 'no' %>
+<% end -%>
+<% unless @allow_point_to_point.nil? -%>
+allow-point-to-point=<%= @allow_point_to_point ? 'yes' : 'no' %>
+<% end -%>
+<% if @cache_entries_max -%>
+cache-entries-max=<%= @cache_entries_max %>
+<% end -%>
+<% if @clients_max -%>
+clients-max=<%= @clients_max %>
+<% end -%>
+<% if @objects_per_client_max -%>
+objects-per-client-max=<%= @objects_per_client_max %>
+<% end -%>
+<% if @entries_per_entry_group_max -%>
+entries-per-entry-group-max=<%= @entries_per_entry_group_max %>
+<% end -%>
+<% if @ratelimit_interval_usec -%>
+ratelimit-interval-usec=<%= @ratelimit_interval_usec %>
+<% end -%>
+<% if @ratelimit_burst -%>
+ratelimit-burst=<%= @ratelimit_burst %>
+<% end -%>
 
 [wide-area]
-enable-wide-area=yes
+<% unless @enable_wide_area.nil? -%>
+enable-wide-area=<%= @enable_wide_area ? 'yes' : 'no' %>
+<% end -%>
 
 [publish]
-#disable-publishing=no
-#disable-user-service-publishing=no
-#add-service-cookie=no
-#publish-addresses=yes
-#publish-hinfo=yes
-#publish-workstation=yes
-#publish-domain=yes
-#publish-dns-servers=192.168.50.1, 192.168.50.2
-#publish-resolv-conf-dns-servers=yes
-#publish-aaaa-on-ipv4=yes
-#publish-a-on-ipv6=no
+<% unless @disable_publishing.nil? -%>
+disable-publishing=<%= @disable_publishing ? 'yes' : 'no' %>
+<% end -%>
+<% unless @disable_user_service_publishing.nil? -%>
+disable-user-service-publishing=<%= @disable_user_service_publishing ? 'yes' : 'no' %>
+<% end -%>
+<% unless @add_service_cookie.nil? -%>
+add-service-cookie=<%= @add_service_cookie ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_addresses.nil? -%>
+publish-addresses=<%= @publish_addresses ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_hinfo.nil? -%>
+publish-hinfo=<%= @publish_hinfo ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_workstation.nil? -%>
+publish-workstation=<%= @publish_workstation ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_domain.nil? -%>
+publish-domain=<%= @publish_domain ? 'yes' : 'no' %>
+<% end -%>
+<% if @publish_dns_servers -%>
+publish-dns-servers=<%= @publish_dns_servers.join(', ') %>
+<% end -%>
+<% unless @publish_resolv_conf_dns_servers.nil? -%>
+publish-resolv-conf-dns-servers=<%= @publish_resolv_conf_dns_servers ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_aaaa_on_ipv4.nil? -%>
+publish-aaaa-on-ipv4=<%= @publish_aaaa_on_ipv4 ? 'yes' : 'no' %>
+<% end -%>
+<% unless @publish_a_on_ipv6.nil? -%>
+publish-a-on-ipv6=<%= @publish_a_on_ipv6 ? 'yes' : 'no' %>
+<% end -%>
 
 [reflector]
-#enable-reflector=no
-#reflect-ipv=no
+<% unless @enable_reflector.nil? -%>
+enable-reflector=<%= @enable_reflector ? 'yes' : 'no' %>
+<% end -%>
+<% unless @reflect_ipv.nil? -%>
+reflect-ipv=<%= @reflect_ipv ? 'yes' : 'no' %>
+<% end -%>
 
 [rlimits]
-#rlimit-as=
-rlimit-core=0
-rlimit-data=4194304
-rlimit-fsize=0
-rlimit-nofile=768
-rlimit-stack=4194304
-rlimit-nproc=3
+<% if @rlimit_as -%>
+rlimit-as=<%= @rlimit_as %>
+<% end -%>
+<% if @rlimit_core -%>
+rlimit-core=<%= @rlimit_core %>
+<% end -%>
+<% if @rlimit_data -%>
+rlimit-data=<%= @rlimit_data %>
+<% end -%>
+<% if @rlimit_fsize -%>
+rlimit-fsize=<%= @rlimit_fsize %>
+<% end -%>
+<% if @rlimit_nofile -%>
+rlimit-nofile=<%= @rlimit_nofile %>
+<% end -%>
+<% if @rlimit_stack -%>
+rlimit-stack=<%= @rlimit_stack %>
+<% end -%>
+<% if @rlimit_nproc -%>
+rlimit-nproc=<%= @rlimit_nproc %>
+<% end -%>
