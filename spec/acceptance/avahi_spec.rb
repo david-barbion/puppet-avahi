@@ -40,6 +40,11 @@ describe 'avahi' do
     apply_manifest(pp, :catch_changes  => true, :future_parser => true)
   end
 
+  # Hack to get rid of any remaining firewall rules
+  describe command('iptables -F') do
+    its(:exit_status) { should eq 0 }
+  end
+
   describe package('avahi') do
     it { should be_installed }
   end
