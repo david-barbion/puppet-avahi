@@ -9,19 +9,10 @@ class avahi (
   validate_string($package_name)
   validate_string($service_name)
 
-  #include ::avahi::install
-  #include ::avahi::config
-  #include ::avahi::daemon
   contain ::avahi::install
   contain ::avahi::config
   contain ::avahi::daemon
 
-  #anchor { 'avahi::begin': }
-  #anchor { 'avahi::end': }
-
-  #Anchor['avahi::begin'] -> Class['::avahi::install']
-  #  ~> Class['::avahi::config'] ~> Class['::avahi::daemon']
-  #  -> Anchor['avahi::end']
   Class['::avahi::install'] ~> Class['::avahi::config']
     ~> Class['::avahi::daemon']
 }
