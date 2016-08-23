@@ -23,10 +23,11 @@ define avahi::service (
   }
 
   file { "${::avahi::conf_dir}/services/${name}.service":
-    ensure  => file,
-    owner   => 0,
-    group   => 0,
-    mode    => '0644',
-    content => template('avahi/service.erb'),
+    ensure       => file,
+    owner        => 0,
+    group        => 0,
+    mode         => '0644',
+    content      => template('avahi/service.erb'),
+    validate_cmd => '/usr/bin/xmllint --path /usr/share/avahi --valid --noout %',
   }
 }
