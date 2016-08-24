@@ -2,17 +2,20 @@ require 'spec_helper'
 
 describe 'avahi::service' do
   let(:title) do
-    'ssh'
+    'nfs'
   end
 
   let(:params) do
     {
-      :description       => '%h',
+      :description       => 'NFS on %h',
       :replace_wildcards => true,
       :services          => [
         {
-          'type' => '_ssh._tcp',
-          'port' => 22,
+          'type'       => '_nfs._tcp',
+          'port'       => 2049,
+          'txt-record' => [
+            'path=/export/some/path',
+          ],
         },
       ],
     }
@@ -36,7 +39,7 @@ describe 'avahi::service' do
         end
 
         it do
-          should contain_file('/etc/avahi/services/ssh.service').with_content(<<-'EOS'.gsub(/ {12}/, ''))
+          should contain_file('/etc/avahi/services/nfs.service').with_content(<<-'EOS'.gsub(/ {12}/, ''))
             <?xml version="1.0" standalone='no'?>
             <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 
@@ -44,11 +47,12 @@ describe 'avahi::service' do
 
             <service-group>
 
-              <name replace-wildcards="yes">%h</name>
+              <name replace-wildcards="yes">NFS on %h</name>
 
               <service>
-                <type>_ssh._tcp</type>
-                <port>22</port>
+                <type>_nfs._tcp</type>
+                <port>2049</port>
+                <txt-record>path=/export/some/path</txt-record>
               </service>
 
             </service-group>
