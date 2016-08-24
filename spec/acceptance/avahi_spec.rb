@@ -31,6 +31,10 @@ describe 'avahi' do
         ],
       }
 
+      avahi_host { 'router.local':
+        ip => '192.0.2.1',
+      }
+
       package { 'avahi-tools':
         ensure => present,
       }
@@ -68,6 +72,7 @@ describe 'avahi' do
     it { should be_mode 644 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
+    its(:content) { should match /^ 192\.0\.2\.1 \s+ router\.local $/x }
   end
 
   describe file('/etc/avahi/services') do
@@ -101,5 +106,10 @@ describe 'avahi' do
     its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SSH \s Remote \s Terminal \s+ local $/x }
     its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SFTP \s File \s Transfer \s+ local $/x }
     its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ \[ [0-9a-f]{2} (?::[0-9a-f]{2}){5} \] \s+ Workstation \s+ local $/x }
+  end
+
+  describe command('avahi-resolve -n router.local') do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should match /^ router\.local \s+ 192\.0\.2\.1 $/x }
   end
 end

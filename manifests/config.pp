@@ -49,12 +49,15 @@ class avahi::config {
     mode   => '0644',
   }
 
-  # FIXME concat, augeas, etc.
   file { "${conf_dir}/hosts":
     ensure => file,
     owner  => 0,
     group  => 0,
     mode   => '0644',
+  }
+
+  resources { 'avahi_host':
+    purge => true,
   }
 
   file { "${conf_dir}/services":

@@ -34,6 +34,7 @@ describe 'avahi' do
       it { should contain_file('/etc/avahi/hosts') }
       it { should contain_file('/etc/avahi/services') }
       it { should contain_package('avahi') }
+      it { should contain_resources('avahi_host') }
       it { should contain_service('avahi-daemon') }
 
       case facts[:osfamily]
