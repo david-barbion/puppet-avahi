@@ -76,44 +76,165 @@ The name of the package to install that provides the Avahi software.
 The name of the service managing the Avahi daemon.
 
 ##### `add_service_cookie`
+
+Boolean controlling if a unique cookie is added to all locally registered
+services.
+
 ##### `allow_interfaces`
+
+Array of interfaces to allow mDNS traffic on.
+
 ##### `allow_point_to_point`
+
+Boolean controlling whether to include Point-to-Point interfaces.
+
 ##### `browse_domains`
+
+An array of additional browse domains, defaults to `[$::domain]`.
+
 ##### `cache_entries_max`
+
+How many entries are cached per interface.
+
 ##### `check_response_ttl`
+
+Boolean controlling whether to check the TTL of mDNS packets.
+
 ##### `clients_max`
+
+The maximum number of D-Bus clients allowed.
+
 ##### `deny_interfaces`
+
+Array of interfaces to explicitly deny mDNS traffic on.
+
 ##### `disable_publishing`
+
+Boolean disabling publishing of any records.
+
 ##### `disable_user_service_publishing`
+
+Boolean disabling publishing of records by any user applications.
+
 ##### `disallow_other_stacks`
+
+Boolean to control if other mDNS stacks are allowed to coexist alongside
+Avahi.
+
 ##### `domain_name`
+
+Override the domain name used, normally `.local`.
+
 ##### `enable_dbus`
+
+Boolean whether to connect to D-Bus.
+
 ##### `enable_reflector`
+
+Boolean to enable the mDNS reflector functionality.
+
 ##### `enable_wide_area`
+
+Boolean to enable wide-area DNS-SD.
+
 ##### `entries_per_entry_group_max`
+
+The maximum number of entries to be registered by a single D-Bus client.
+
 ##### `host_name`
+
+Override the host name used for the local machine.
+
 ##### `objects_per_client_max`
+
+The maximum number of objects to be registered by a single D-Bus client.
+
 ##### `publish_aaaa_on_ipv4`
+
+Boolean to publish an AAAA IPv6 record via IPv⒋.
+
 ##### `publish_a_on_ipv6`
+
+Boolean to publish an A IPv4 record via IPv6.
+
 ##### `publish_addresses`
+
+Boolean to publish mDNS address records for all local IP addresses.
+
 ##### `publish_dns_servers`
+
+Array of unicast DNS server IP addresses to register in mDNS.
+
 ##### `publish_domain`
+
+Boolean controlling whether to announce the local domain name for browsing by
+other hosts.
+
 ##### `publish_hinfo`
+
+Boolean controlling whether to publish an HINFO record on all interfaces.
+
 ##### `publish_resolv_conf_dns_servers`
+
+Boolean controlling whether to publish the DNS servers listed in
+`/etc/resolv.conf` in addition to any listed in `publish_dns_servers`.
+
 ##### `publish_workstation`
+
+Boolean controlling whether to register a workstation record for the local
+machine.
+
 ##### `ratelimit_burst`
+
+Per-interface packet rate-limiting burst parameter.
+
 ##### `ratelimit_interval_usec`
+
+Per-interface packet rate-limiting interval parameter.
+
 ##### `reflect_ipv`
+
+Boolean controlling whether to reflect between IPv4 and IPv6.
+
 ##### `rlimit_as`
+
+Value in bytes for `RLIMIT_AS`.
+
 ##### `rlimit_core`
+
+Value in bytes for `RLIMIT_CORE`.
+
 ##### `rlimit_data`
+
+Value in bytes for `RLIMIT_DATA`.
+
 ##### `rlimit_fsize`
+
+Value for `RLIMIT_FSIZE`.
+
 ##### `rlimit_nofile`
+
+Value for `RLIMIT_NOFILE`.
+
 ##### `rlimit_nproc`
+
+Value for `RLIMIT_NPROC`.
+
 ##### `rlimit_stack`
+
+Value in bytes for `RLIMIT_STACK`.
+
 ##### `use_iff_running`
+
+Boolean controlling whether to use the `IFF_RUNNING` flag on interfaces.
+
 ##### `use_ipv4`
+
+Boolean to disable IPv4 traffic.
+
 ##### `use_ipv6`
+
+Boolean to disable IPv6 traffic.
 
 #### Defined Type: `avahi::service`
 
@@ -155,6 +276,7 @@ avahi_host { 'router.local':
   ensure => present,
   ip     => '192.0.2.1',
 }
+```
 
 **Parameters within `avahi_host`:**
 
@@ -272,6 +394,7 @@ include ::avahi
     },
   ],
 }
+```
 
 Install Avahi and add a static host entry on behalf of an mDNS-unaware router:
 
