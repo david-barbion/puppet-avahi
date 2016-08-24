@@ -1,6 +1,6 @@
 {
   "name": "bodgit-avahi",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "bodgit",
   "summary": "Puppet Module for managing Avahi",
   "license": "Apache-2.0",
@@ -49,7 +49,8 @@
   ],
   "tags": [
     "avahi",
-    "mdns"
+    "mdns",
+    "dns-sd"
   ],
   "dependencies": [
     {
