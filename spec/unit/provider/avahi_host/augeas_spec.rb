@@ -1,13 +1,21 @@
 require 'spec_helper'
+require 'fileutils'
 
 provider_class = Puppet::Type.type(:avahi_host).provider(:augeas)
 
 describe provider_class do
 
+  let(:tmpdir) { Dir.mktmpdir('statetmp').encode!(Encoding::UTF_8) }
+
   before :each do
     Puppet::Type.type(:avahi_host).stubs(:defaultprovider).returns described_class
     FileTest.stubs(:exist?).returns false
     FileTest.stubs(:exist?).with('/etc/avahi/hosts').returns true
+    Puppet[:statedir] = tmpdir
+  end
+
+  after :each do
+    FileUtils.rm_rf(tmpdir)
   end
 
   context 'with empty file' do
