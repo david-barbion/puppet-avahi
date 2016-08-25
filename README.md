@@ -363,7 +363,9 @@ include ::avahi
   services    => [
     {
       'type'       => '_ipp._tcp',
-      'subtype'    => '_universal._sub._ipp._tcp',
+      'subtype'    => [
+        '_universal._sub._ipp._tcp',
+      ],
       'port'       => 631,
       'txt-record' => [
         'txtver=1',
