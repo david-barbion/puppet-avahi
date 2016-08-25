@@ -19,7 +19,7 @@ group :development, :test do
   gem 'puppet-lint-trailing_comma-check',                 :require => false
   gem 'puppet-lint-file_ensure-check',                    :require => false
   gem 'puppet-lint-version_comparison-check',             :require => false
-  gem 'puppet-lint-fileserver-check',                     :require => false
+  gem 'puppet-lint-fileserver-check',                     :require => false, :git => 'https://github.com/bodgit/puppet-lint-fileserver-check.git', :branch => 'puppet-lint-2.x'
   gem 'puppet-lint-file_source_rights-check',             :require => false
   gem 'puppet-lint-alias-check',                          :require => false
   gem 'librarian-puppet',                                 :require => false
