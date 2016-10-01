@@ -19,9 +19,7 @@ describe 'avahi' do
   on_supported_os.each do |os, facts|
     context "on #{os}", :compile do
       let(:facts) do
-        facts.merge({
-          :dbus_startup_provider => 'init',
-        })
+        facts
       end
 
       it { should contain_class('avahi') }
