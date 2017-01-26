@@ -1,4 +1,4 @@
-#
+# @!visibility private
 class avahi::daemon {
 
   service { $::avahi::service_name:

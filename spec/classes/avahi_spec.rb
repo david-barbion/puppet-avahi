@@ -31,20 +31,22 @@ describe 'avahi' do
       it { should contain_file('/etc/avahi') }
       it { should contain_file('/etc/avahi/hosts') }
       it { should contain_file('/etc/avahi/services') }
-      it { should contain_package('avahi') }
       it { should contain_resources('avahi_host') }
-      it { should contain_service('avahi-daemon') }
 
       case facts[:osfamily]
       when 'RedHat'
+        it { should contain_group('avahi') }
+        it { should contain_package('avahi') }
+        it { should contain_service('avahi-daemon') }
+        it { should contain_user('avahi') }
+
         case facts[:operatingsystemmajrelease]
         when '6'
-          it do
+          it {
             should contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
             # !!! Managed by Puppet !!!
 
             [server]
-            browse-domains=#{facts[:domain]}
             use-ipv4=yes
             use-ipv6=no
 
@@ -63,14 +65,13 @@ describe 'avahi' do
             rlimit-stack=4194304
             rlimit-nproc=3
             EOS
-          end
+          }
         else
-          it do
+          it {
             should contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
             # !!! Managed by Puppet !!!
 
             [server]
-            browse-domains=#{facts[:domain]}
             use-ipv4=yes
             use-ipv6=no
             ratelimit-interval-usec=1000000
@@ -91,8 +92,18 @@ describe 'avahi' do
             rlimit-stack=4194304
             rlimit-nproc=3
             EOS
-          end
+          }
         end
+      when 'Debian'
+        it { should contain_group('avahi') }
+        it { should contain_package('avahi-daemon') }
+        it { should contain_service('avahi-daemon') }
+        it { should contain_user('avahi') }
+      when 'OpenBSD'
+        it { should contain_group('_avahi') }
+        it { should contain_package('avahi') }
+        it { should contain_service('avahi_daemon') }
+        it { should contain_user('_avahi') }
       end
     end
   end

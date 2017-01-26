@@ -1,7 +1,10 @@
-#
+# @!visibility private
 class avahi::config {
 
   $conf_dir                        = $::avahi::conf_dir
+  $group                           = $::avahi::group
+  $policy_group                    = $::avahi::policy_group
+  $user                            = $::avahi::user
   $add_service_cookie              = $::avahi::add_service_cookie
   $allow_interfaces                = $::avahi::allow_interfaces
   $allow_point_to_point            = $::avahi::allow_point_to_point
@@ -42,6 +45,17 @@ class avahi::config {
   $use_ipv4                        = $::avahi::use_ipv4
   $use_ipv6                        = $::avahi::use_ipv6
 
+  group { $group:
+    ensure => present,
+    system => true,
+  }
+
+  user { $user:
+    ensure => present,
+    gid    => $group,
+    system => true,
+  }
+
   file { $conf_dir:
     ensure => directory,
     owner  => 0,
@@ -80,6 +94,6 @@ class avahi::config {
   }
 
   ::dbus::system { 'avahi-dbus':
-    content => file('avahi/avahi-dbus.conf'),
+    content => template("${module_name}/avahi-dbus.conf.erb"),
   }
 }
