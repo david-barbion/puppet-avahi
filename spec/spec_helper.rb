@@ -18,6 +18,9 @@ RSpec.configure do |c|
   c.before(:each) do
     Puppet.features.stubs(:root? => true)
   end
+  c.after(:suite) do
+    RSpec::Puppet::Coverage.report!(100)
+  end
   c.default_facts = { :dbus_startup_provider => 'init' }
 end
 
@@ -29,8 +32,6 @@ Puppet[:libdir] = File.join(Puppet[:modulepath], 'augeasproviders_core', 'lib')
 shared_examples :compile, :compile => true do
   it { should compile.with_all_deps }
 end
-
-at_exit { RSpec::Puppet::Coverage.report! }
 
 unless RUBY_VERSION =~ /^1\.8/
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[

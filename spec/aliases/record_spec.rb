@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-if Puppet.version.to_f >= 4.4
+if Puppet::Util::Package.versioncmp(Puppet.version, '4.4.0') >= 0
   describe 'test::record', type: :class do
     describe 'accepts record structs' do
       [
