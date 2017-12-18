@@ -13,7 +13,7 @@ describe 'avahi' do
       }
     end
 
-    it { expect { should compile }.to raise_error(/not supported on an Unsupported/) }
+    it { is_expected.to compile.and_raise_error(/not supported on an Unsupported/) }
   end
 
   on_supported_os.each do |os, facts|
@@ -22,28 +22,28 @@ describe 'avahi' do
         facts
       end
 
-      it { should contain_class('avahi') }
-      it { should contain_class('avahi::config') }
-      it { should contain_class('avahi::daemon') }
-      it { should contain_class('avahi::install') }
-      it { should contain_class('avahi::params') }
-      it { should contain_dbus__system('avahi-dbus') }
-      it { should contain_file('/etc/avahi') }
-      it { should contain_file('/etc/avahi/hosts') }
-      it { should contain_file('/etc/avahi/services') }
-      it { should contain_resources('avahi_host') }
+      it { is_expected.to contain_class('avahi') }
+      it { is_expected.to contain_class('avahi::config') }
+      it { is_expected.to contain_class('avahi::daemon') }
+      it { is_expected.to contain_class('avahi::install') }
+      it { is_expected.to contain_class('avahi::params') }
+      it { is_expected.to contain_dbus__system('avahi-dbus') }
+      it { is_expected.to contain_file('/etc/avahi') }
+      it { is_expected.to contain_file('/etc/avahi/hosts') }
+      it { is_expected.to contain_file('/etc/avahi/services') }
+      it { is_expected.to contain_resources('avahi_host') }
 
       case facts[:osfamily]
       when 'RedHat'
-        it { should contain_group('avahi') }
-        it { should contain_package('avahi') }
-        it { should contain_service('avahi-daemon') }
-        it { should contain_user('avahi') }
+        it { is_expected.to contain_group('avahi') }
+        it { is_expected.to contain_package('avahi') }
+        it { is_expected.to contain_service('avahi-daemon') }
+        it { is_expected.to contain_user('avahi') }
 
         case facts[:operatingsystemmajrelease]
         when '6'
           it {
-            should contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
+            is_expected.to contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
             # !!! Managed by Puppet !!!
 
             [server]
@@ -68,7 +68,7 @@ describe 'avahi' do
           }
         else
           it {
-            should contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
+            is_expected.to contain_file('/etc/avahi/avahi-daemon.conf').with_content(<<-EOS.gsub(/ {12}/, ''))
             # !!! Managed by Puppet !!!
 
             [server]
@@ -95,15 +95,15 @@ describe 'avahi' do
           }
         end
       when 'Debian'
-        it { should contain_group('avahi') }
-        it { should contain_package('avahi-daemon') }
-        it { should contain_service('avahi-daemon') }
-        it { should contain_user('avahi') }
+        it { is_expected.to contain_group('avahi') }
+        it { is_expected.to contain_package('avahi-daemon') }
+        it { is_expected.to contain_service('avahi-daemon') }
+        it { is_expected.to contain_user('avahi') }
       when 'OpenBSD'
-        it { should contain_group('_avahi') }
-        it { should contain_package('avahi') }
-        it { should contain_service('avahi_daemon') }
-        it { should contain_user('_avahi') }
+        it { is_expected.to contain_group('_avahi') }
+        it { is_expected.to contain_package('avahi') }
+        it { is_expected.to contain_service('avahi_daemon') }
+        it { is_expected.to contain_user('_avahi') }
       end
     end
   end
