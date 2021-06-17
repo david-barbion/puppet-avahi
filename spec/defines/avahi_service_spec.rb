@@ -7,9 +7,9 @@ describe 'avahi::service' do
 
   let(:params) do
     {
-      :description       => 'NFS on %h',
-      :replace_wildcards => true,
-      :services          => [
+      description:       'NFS on %h',
+      replace_wildcards: true,
+      services:          [
         {
           'type'       => '_nfs._tcp',
           'port'       => 2049,
@@ -28,7 +28,7 @@ describe 'avahi::service' do
       end
 
       context 'without avahi class included' do
-        it { is_expected.to compile.and_raise_error(/must include the avahi base class/) }
+        it { is_expected.to compile.and_raise_error(%r{must include the avahi base class}) }
       end
 
       context 'with avahi class included', :compile do
@@ -37,7 +37,7 @@ describe 'avahi::service' do
         end
 
         it do
-          is_expected.to contain_file('/etc/avahi/services/nfs.service').with_content(<<-'EOS'.gsub(/ {12}/, ''))
+          is_expected.to contain_file('/etc/avahi/services/nfs.service').with_content(<<-'EOS'.gsub(%r{ {12}}, ''))
             <?xml version="1.0" standalone='no'?>
             <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 

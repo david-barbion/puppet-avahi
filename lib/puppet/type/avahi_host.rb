@@ -24,7 +24,7 @@ DESC
   end
 
   newproperty(:ip) do
-    desc "The IP address of the host, either IPv4 or IPv6."
+    desc 'The IP address of the host, either IPv4 or IPv6.'
   end
 
   newparam(:target) do

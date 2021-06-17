@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'avahi' do
-
   case fact('osfamily')
   when 'RedHat'
     group   = 'root'
@@ -17,8 +16,7 @@ describe 'avahi' do
     service = 'avahi_daemon'
   end
 
-  it 'should work with no errors' do
-
+  it 'works with no errors' do
     pp = <<-EOS
       Package {
         source => $::osfamily ? {
@@ -75,82 +73,86 @@ describe 'avahi' do
       }
     EOS
 
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes  => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   # Hack to get rid of any remaining firewall rules
-  describe command('iptables -F'), :unless => fact('osfamily').eql?('OpenBSD') do
-    its(:exit_status) { should eq 0 }
+  describe command('iptables -F'), unless: fact('osfamily').eql?('OpenBSD') do
+    its(:exit_status) { is_expected.to eq 0 }
   end
 
   describe package(package) do
-    it { should be_installed }
+    it { is_expected.to be_installed }
   end
 
   describe file('/etc/avahi') do
-    it { should be_directory }
-    it { should be_mode 755 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_mode 755 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
   end
 
   describe file('/etc/avahi/avahi-daemon.conf') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
+    it { is_expected.to be_file }
+    it { is_expected.to be_mode 644 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
   end
 
   describe file('/etc/avahi/hosts') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
-    its(:content) { should match /^ 192\.0\.2\.1 \s+ router\.local $/x }
+    it { is_expected.to be_file }
+    it { is_expected.to be_mode 644 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
+    its(:content) { is_expected.to match(%r{^ 192\.0\.2\.1 \s+ router\.local $}x) }
   end
 
   describe file('/etc/avahi/services') do
-    it { should be_directory }
-    it { should be_mode 755 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
+    it { is_expected.to be_directory }
+    it { is_expected.to be_mode 755 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
   end
 
   describe file('/etc/avahi/services/ssh.service') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
+    it { is_expected.to be_file }
+    it { is_expected.to be_mode 644 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
   end
 
   describe file('/etc/avahi/services/sftp-ssh.service') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into group }
+    it { is_expected.to be_file }
+    it { is_expected.to be_mode 644 }
+    it { is_expected.to be_owned_by 'root' }
+    it { is_expected.to be_grouped_into group }
   end
 
   describe service(service) do
-    it { should be_enabled }
-    it { should be_running }
+    it { is_expected.to be_enabled }
+    it { is_expected.to be_running }
   end
 
-  describe command('avahi-browse -a -t'), :unless => fact('osfamily').eql?('OpenBSD') do
-    its(:exit_status) { should eq 0 }
-    its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SSH \s Remote \s Terminal \s+ local $/x }
-    its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SFTP \s File \s Transfer \s+ local $/x }
+  describe command('avahi-browse -a -t'), unless: fact('osfamily').eql?('OpenBSD') do
+    its(:exit_status) { is_expected.to eq 0 }
+    its(:stdout) do
+      is_expected.to match(%r{^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SSH \s Remote \s Terminal \s+ local $}x)
+      is_expected.to match(%r{^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ SFTP \s File \s Transfer \s+ local $}x)
+    end
   end
 
   # OpenBSD package seems to be lacking the compiled service types database
-  describe command('avahi-browse -a -t'), :if => fact('osfamily').eql?('OpenBSD') do
-    its(:exit_status) { should eq 0 }
-    its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ _ssh\._tcp \s+ local $/x }
-    its(:stdout) { should match /^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ _sftp-ssh\._tcp \s+ local $/x }
+  describe command('avahi-browse -a -t'), if: fact('osfamily').eql?('OpenBSD') do
+    its(:exit_status) { is_expected.to eq 0 }
+    its(:stdout) do
+      is_expected.to match(%r{^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ _ssh\._tcp \s+ local $}x)
+      is_expected.to match(%r{^ \+ \s+ \S+ \s+ IPv4 \s+ #{fact('hostname')} \s+ _sftp-ssh\._tcp \s+ local $}x)
+    end
   end
 
   describe command('avahi-resolve -n router.local') do
-    its(:exit_status) { should eq 0 }
-    its(:stdout) { should match /^ router\.local \s+ 192\.0\.2\.1 $/x }
+    its(:exit_status) { is_expected.to eq 0 }
+    its(:stdout) { is_expected.to match(%r{^ router\.local \s+ 192\.0\.2\.1 $}x) }
   end
 end
