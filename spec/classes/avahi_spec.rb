@@ -2,24 +2,16 @@ require 'spec_helper'
 
 describe 'avahi' do
   let(:pre_condition) do
-    'include ::dbus'
-  end
-
-  context 'on unsupported distributions' do
-    let(:facts) do
-      {
-        osfamily: 'Unsupported'
-      }
-    end
-
-    it { is_expected.to compile.and_raise_error(%r{not supported on an Unsupported}) }
+    'include dbus'
   end
 
   on_supported_os.each do |os, facts|
-    context "on #{os}", :compile do
+    context "on #{os}" do
       let(:facts) do
         facts
       end
+
+      it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_class('avahi') }
       it { is_expected.to contain_class('avahi::config') }
