@@ -1,11 +1,11 @@
-Puppet::Type.type(:avahi_host).provide(:augeas, :parent => Puppet::Type.type(:augeasprovider).provider(:default)) do
+Puppet::Type.type(:avahi_host).provide(:augeas, parent: Puppet::Type.type(:augeasprovider).provider(:default)) do
   desc 'Uses Augeas API to update an Avahi host entry.'
 
   default_file { '/etc/avahi/hosts' }
 
   lens { 'Hosts.lns' }
 
-  confine :feature => :augeas
+  confine feature: :augeas
 
   resource_path do |resource|
     "$target/*[canonical = '#{resource[:name]}']"
@@ -16,9 +16,9 @@ Puppet::Type.type(:avahi_host).provide(:augeas, :parent => Puppet::Type.type(:au
       resources = []
       aug.match("$target/*[label()!='#comment']").each do |spath|
         entry = {
-          :name   => aug.get("#{spath}/canonical"),
-          :ensure => :present,
-          :ip     => aug.get("#{spath}/ipaddr"),
+          name:   aug.get("#{spath}/canonical"),
+          ensure: :present,
+          ip:     aug.get("#{spath}/ipaddr"),
         }
         resources << new(entry)
       end
@@ -40,5 +40,5 @@ Puppet::Type.type(:avahi_host).provide(:augeas, :parent => Puppet::Type.type(:au
     end
   end
 
-  attr_aug_accessor(:ip, { :label => 'ipaddr' })
+  attr_aug_accessor(:ip, { label: 'ipaddr' })
 end

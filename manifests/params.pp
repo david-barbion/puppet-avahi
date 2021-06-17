@@ -11,7 +11,7 @@ class avahi::params {
   $rlimit_stack     = 4194304
   $use_ipv4         = true
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       $dtd_dir             = '/usr/share/avahi'
       $package_name        = 'avahi'
@@ -25,7 +25,7 @@ class avahi::params {
       $validate            = true
       $xmllint             = '/usr/bin/xmllint'
 
-      case $::operatingsystemmajrelease {
+      case $facts['os']['release']['major'] {
         '6': {
           $ratelimit_burst         = undef
           $ratelimit_interval_usec = undef
@@ -49,9 +49,9 @@ class avahi::params {
       $validate                = false # xmllint isn't naturally pulled in by dependencies
       $xmllint                 = '/usr/bin/xmllint'
 
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Ubuntu': {
-          case $::operatingsystemrelease {
+          case $facts['os']['release']['full'] {
             '14.04': {
               $publish_hinfo       = undef
               $publish_workstation = undef
@@ -84,7 +84,7 @@ class avahi::params {
       $xmllint                 = '/usr/local/bin/xmllint'
     }
     default: {
-      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
+      fail("The ${module_name} module is not supported on an ${facts['os']['family']} based system.")
     }
   }
 }

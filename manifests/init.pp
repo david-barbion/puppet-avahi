@@ -1,8 +1,8 @@
 # Installs and configures Avahi.
 #
 # @example Declaring the class
-#   include ::dbus
-#   include ::avahi
+#   include dbus
+#   include avahi
 #
 # @param conf_dir The top-level configuration directory, usually `/etc/avahi`.
 # @param dtd_dir The directory containing the XML DTD for service validation.
@@ -66,17 +66,17 @@
 # @param use_ipv4
 # @param use_ipv6
 #
-# @see puppet_defined_types::avahi::service ::avahi::service
+# @see puppet_defined_types::avahi::service avahi::service
 class avahi (
-  Stdlib::Absolutepath                      $conf_dir                        = $::avahi::params::conf_dir,
-  Stdlib::Absolutepath                      $dtd_dir                         = $::avahi::params::dtd_dir,
-  String                                    $group                           = $::avahi::params::group,
-  String                                    $package_name                    = $::avahi::params::package_name,
-  String                                    $policy_group                    = $::avahi::params::policy_group,
-  String                                    $service_name                    = $::avahi::params::service_name,
-  String                                    $user                            = $::avahi::params::user,
-  Boolean                                   $validate                        = $::avahi::params::validate,
-  Stdlib::Absolutepath                      $xmllint                         = $::avahi::params::xmllint,
+  Stdlib::Absolutepath                      $conf_dir                        = $avahi::params::conf_dir,
+  Stdlib::Absolutepath                      $dtd_dir                         = $avahi::params::dtd_dir,
+  String                                    $group                           = $avahi::params::group,
+  String                                    $package_name                    = $avahi::params::package_name,
+  String                                    $policy_group                    = $avahi::params::policy_group,
+  String                                    $service_name                    = $avahi::params::service_name,
+  String                                    $user                            = $avahi::params::user,
+  Boolean                                   $validate                        = $avahi::params::validate,
+  Stdlib::Absolutepath                      $xmllint                         = $avahi::params::xmllint,
   Optional[Boolean]                         $add_service_cookie              = undef,
   Optional[Array[String, 1]]                $allow_interfaces                = undef,
   Optional[Boolean]                         $allow_point_to_point            = undef,
@@ -91,7 +91,7 @@ class avahi (
   Optional[String]                          $domain_name                     = undef,
   Optional[Boolean]                         $enable_dbus                     = undef,
   Optional[Boolean]                         $enable_reflector                = undef,
-  Optional[Boolean]                         $enable_wide_area                = $::avahi::params::enable_wide_area,
+  Optional[Boolean]                         $enable_wide_area                = $avahi::params::enable_wide_area,
   Optional[Integer[0]]                      $entries_per_entry_group_max     = undef,
   Optional[String]                          $host_name                       = undef,
   Optional[Integer[0]]                      $objects_per_client_max          = undef,
@@ -100,28 +100,27 @@ class avahi (
   Optional[Boolean]                         $publish_addresses               = undef,
   Optional[Array[IP::Address::NoSubnet, 1]] $publish_dns_servers             = undef,
   Optional[Boolean]                         $publish_domain                  = undef,
-  Optional[Boolean]                         $publish_hinfo                   = $::avahi::params::publish_hinfo,
+  Optional[Boolean]                         $publish_hinfo                   = $avahi::params::publish_hinfo,
   Optional[Boolean]                         $publish_resolv_conf_dns_servers = undef,
-  Optional[Boolean]                         $publish_workstation             = $::avahi::params::publish_workstation,
-  Optional[Integer[0]]                      $ratelimit_burst                 = $::avahi::params::ratelimit_burst,
-  Optional[Integer[0]]                      $ratelimit_interval_usec         = $::avahi::params::ratelimit_interval_usec,
+  Optional[Boolean]                         $publish_workstation             = $avahi::params::publish_workstation,
+  Optional[Integer[0]]                      $ratelimit_burst                 = $avahi::params::ratelimit_burst,
+  Optional[Integer[0]]                      $ratelimit_interval_usec         = $avahi::params::ratelimit_interval_usec,
   Optional[Boolean]                         $reflect_ipv                     = undef,
   Optional[Integer[0]]                      $rlimit_as                       = undef,
-  Optional[Integer[0]]                      $rlimit_core                     = $::avahi::params::rlimit_core,
-  Optional[Integer[0]]                      $rlimit_data                     = $::avahi::params::rlimit_data,
-  Optional[Integer[0]]                      $rlimit_fsize                    = $::avahi::params::rlimit_fsize,
-  Optional[Integer[0]]                      $rlimit_nofile                   = $::avahi::params::rlimit_nofile,
-  Optional[Integer[2]]                      $rlimit_nproc                    = $::avahi::params::rlimit_nproc,
-  Optional[Integer[0]]                      $rlimit_stack                    = $::avahi::params::rlimit_stack,
+  Optional[Integer[0]]                      $rlimit_core                     = $avahi::params::rlimit_core,
+  Optional[Integer[0]]                      $rlimit_data                     = $avahi::params::rlimit_data,
+  Optional[Integer[0]]                      $rlimit_fsize                    = $avahi::params::rlimit_fsize,
+  Optional[Integer[0]]                      $rlimit_nofile                   = $avahi::params::rlimit_nofile,
+  Optional[Integer[2]]                      $rlimit_nproc                    = $avahi::params::rlimit_nproc,
+  Optional[Integer[0]]                      $rlimit_stack                    = $avahi::params::rlimit_stack,
   Optional[Boolean]                         $use_iff_running                 = undef,
-  Optional[Boolean]                         $use_ipv4                        = $::avahi::params::use_ipv4,
-  Optional[Boolean]                         $use_ipv6                        = $::avahi::params::use_ipv6,
-) inherits ::avahi::params {
+  Optional[Boolean]                         $use_ipv4                        = $avahi::params::use_ipv4,
+  Optional[Boolean]                         $use_ipv6                        = $avahi::params::use_ipv6,
+) inherits avahi::params {
 
-  contain ::avahi::install
-  contain ::avahi::config
-  contain ::avahi::daemon
+  contain avahi::install
+  contain avahi::config
+  contain avahi::daemon
 
-  Class['::avahi::install'] ~> Class['::avahi::config']
-    ~> Class['::avahi::daemon']
+  Class['avahi::install'] ~> Class['avahi::config'] ~> Class['avahi::daemon']
 }

@@ -1,10 +1,10 @@
 # Statically define a service in Avahi.
 #
 # @example Add static service definitions for SSH and SFTP
-#   include ::dbus
-#   include ::avahi
+#   include dbus
+#   include avahi
 #
-#   ::avahi::service { 'ssh':
+#   avahi::service { 'ssh':
 #     description       => '%h',
 #     replace_wildcards => true,
 #     services          => [
@@ -15,7 +15,7 @@
 #     ],
 #   }
 #
-#   ::avahi::service { 'sftp-ssh':
+#   avahi::service { 'sftp-ssh':
 #     description       => '%h',
 #     replace_wildcards => true,
 #     services          => [
@@ -27,10 +27,10 @@
 #   }
 #
 # @example Add a static service definition for NFS on IPv6 only
-#   include ::dbus
-#   include ::avahi
+#   include dbus
+#   include avahi
 #
-#   ::avahi::service { 'nfs':
+#   avahi::service { 'nfs':
 #     description       => 'NFS on %h',
 #     replace_wildcards => true,
 #     services          => [
@@ -46,10 +46,10 @@
 #   }
 #
 # @example Advertise an AirPrint printer
-#   include ::dbus
-#   include ::avahi
+#   include dbus
+#   include avahi
 #
-#   ::avahi::service { 'printer':
+#   avahi::service { 'printer':
 #     description => 'An AirPrint printer',
 #     services    => [
 #       {
@@ -98,7 +98,7 @@
 # @param service The name of the service. It is used to construct the filename,
 #   i.e. `${conf_dir}/services/${service}.service`.
 #
-# @see puppet_classes::avahi ::avahi
+# @see puppet_classes::avahi avahi
 # @see https://linux.die.net/man/5/avahi.service avahi.service(5)
 define avahi::service (
   String                  $description,
@@ -107,16 +107,14 @@ define avahi::service (
   String                  $service           = $title,
 ) {
 
-  if ! defined(Class['::avahi']) {
-    fail('You must include the avahi base class before using any avahi defined resources')
-  }
+  include avahi
 
-  $validate_cmd = $::avahi::validate ? {
-    true    => "${::avahi::xmllint} --path ${::avahi::dtd_dir} --valid --noout %",
+  $validate_cmd = $avahi::validate ? {
+    true    => "${avahi::xmllint} --path ${avahi::dtd_dir} --valid --noout %",
     default => undef,
   }
 
-  file { "${::avahi::conf_dir}/services/${service}.service":
+  file { "${avahi::conf_dir}/services/${service}.service":
     ensure       => file,
     owner        => 0,
     group        => 0,
