@@ -11,9 +11,6 @@ fixtures:
     dbus:
       repo: "bodgit/dbus"
       ref: "2.0.0"
-    ip:
-      repo: "thrnio/ip"
-      ref: "1.0.0"
     stdlib:
       repo: "puppetlabs/stdlib"
-      ref: "4.13.0"
+      ref: "4.25.0"
