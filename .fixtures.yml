@@ -2,15 +2,16 @@ fixtures:
   symlinks:
     avahi: "#{source_dir}"
   forge_modules:
-    augeasproviders_core:
-      repo: "herculesteam/augeasproviders_core"
-      ref: "2.6.0"
     bodgitlib:
       repo: "bodgit/bodgitlib"
-      ref: "1.5.0"
+      ref: "3.0.1"
     dbus:
       repo: "bodgit/dbus"
-      ref: "2.0.0"
+      ref: "3.0.0"
     stdlib:
       repo: "puppetlabs/stdlib"
-      ref: "4.25.0"
+      ref: "7.1.0"
+  repositories:
+    augeasproviders_core:
+      repo: "https://github.com/hercules-team/augeasproviders_core.git"
+      ref: "2.7.0"
