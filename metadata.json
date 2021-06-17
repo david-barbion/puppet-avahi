@@ -7,6 +7,28 @@
   "source": "https://github.com/bodgit/puppet-avahi",
   "project_page": "https://github.com/bodgit/puppet-avahi",
   "issues_url": "https://github.com/bodgit/puppet-avahi/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=4.13.0 <5.0.0"
+    },
+    {
+      "name": "thrnio/ip",
+      "version_requirement": ">=1.0.0 <2.0.0"
+    },
+    {
+      "name": "bodgit/bodgitlib",
+      "version_requirement": ">=1.5.0 <3.0.0"
+    },
+    {
+      "name": "bodgit/dbus",
+      "version_requirement": ">=2.0.0 <3.0.0"
+    },
+    {
+      "name": "herculesteam/augeasproviders_core",
+      "version_requirement": ">=2.1.0 <3.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -68,26 +90,7 @@
     "mdns",
     "dns-sd"
   ],
-  "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">=4.13.0 <5.0.0"
-    },
-    {
-      "name": "thrnio/ip",
-      "version_requirement": ">=1.0.0 <2.0.0"
-    },
-    {
-      "name": "bodgit/bodgitlib",
-      "version_requirement": ">=1.5.0 <3.0.0"
-    },
-    {
-      "name": "bodgit/dbus",
-      "version_requirement": ">=2.0.0 <3.0.0"
-    },
-    {
-      "name": "herculesteam/augeasproviders_core",
-      "version_requirement": ">=2.1.0 <3.0.0"
-    }
-  ]
+  "pdk-version": "2.1.0",
+  "template-url": "https://github.com/bodgit/pdk-templates#bodgit",
+  "template-ref": "remotes/origin/bodgit-0-g022387a"
 }
