@@ -1,0 +1,9 @@
+---
+avahi::dtd_dir: '/usr/share/avahi'
+avahi::group: 'avahi'
+avahi::package_name: 'avahi'
+avahi::policy_group: 'avahi'
+avahi::service_name: 'avahi-daemon'
+avahi::user: 'avahi'
+avahi::validate: true
+avahi::xmllint: '/usr/bin/xmllint'
