@@ -17,7 +17,6 @@ describe 'avahi' do
       it { is_expected.to contain_class('avahi::config') }
       it { is_expected.to contain_class('avahi::daemon') }
       it { is_expected.to contain_class('avahi::install') }
-      it { is_expected.to contain_class('avahi::params') }
       it { is_expected.to contain_dbus__system('avahi-dbus') }
       it { is_expected.to contain_file('/etc/avahi') }
       it { is_expected.to contain_file('/etc/avahi/avahi-daemon.conf') }

@@ -1,0 +1,10 @@
+---
+avahi::publish_hinfo: ~
+avahi::publish_workstation: ~
+avahi::rlimit_core: 0
+avahi::rlimit_data: 4194304
+avahi::rlimit_fsize: 0
+avahi::rlimit_nofile: 768
+avahi::rlimit_nproc: 3
+avahi::rlimit_stack: 4194304
+avahi::use_ipv6: false
