@@ -1,11 +1,10 @@
 # avahi
 
-Tested with Travis CI
-
-[![Build Status](https://travis-ci.org/bodgit/puppet-avahi.svg?branch=master)](https://travis-ci.org/bodgit/puppet-avahi)
-[![Coverage Status](https://coveralls.io/repos/bodgit/puppet-avahi/badge.svg?branch=master&service=github)](https://coveralls.io/github/bodgit/puppet-avahi?branch=master)
-[![Puppet Forge](http://img.shields.io/puppetforge/v/bodgit/avahi.svg)](https://forge.puppetlabs.com/bodgit/avahi)
-[![Dependency Status](https://gemnasium.com/bodgit/puppet-avahi.svg)](https://gemnasium.com/bodgit/puppet-avahi)
+[![Build Status](https://img.shields.io/github/workflow/status/bodgit/puppet-avahi/Test)](https://github.com/bodgit/puppet-avahi/actions?query=workflow%3ATest)
+[![Codecov](https://img.shields.io/codecov/c/github/bodgit/puppet-avahi)](https://codecov.io/gh/bodgit/puppet-avahi)
+[![Puppet Forge version](http://img.shields.io/puppetforge/v/bodgit/avahi)](https://forge.puppetlabs.com/bodgit/avahi)
+[![Puppet Forge downloads](https://img.shields.io/puppetforge/dt/bodgit/avahi)](https://forge.puppetlabs.com/bodgit/avahi)
+[![Puppet Forge - PDK version](https://img.shields.io/puppetforge/pdk-version/bodgit/avahi)](https://forge.puppetlabs.com/bodgit/avahi)
 
 #### Table of Contents
 
@@ -21,7 +20,7 @@ Tested with Travis CI
 
 This module manages Avahi for mDNS/DNS-SD services.
 
-RHEL/CentOS, Ubuntu, Debian and OpenBSD are supported using Puppet 4.4.0 or
+RHEL/CentOS, Ubuntu, Debian and OpenBSD are supported using Puppet 5 or
 later.
 
 ## Setup
@@ -31,8 +30,8 @@ later.
 In the very simplest case, you can just include the following:
 
 ```puppet
-include ::dbus
-include ::avahi
+include dbus
+include avahi
 ```
 
 ## Usage
@@ -40,10 +39,10 @@ include ::avahi
 Install Avahi and add static service definitions for SSH and SFTP:
 
 ```puppet
-include ::dbus
-include ::avahi
+include dbus
+include avahi
 
-::avahi::service { 'ssh':
+avahi::service { 'ssh':
   description       => '%h',
   replace_wildcards => true,
   services          => [
@@ -54,7 +53,7 @@ include ::avahi
   ],
 }
 
-::avahi::service { 'sftp-ssh':
+avahi::service { 'sftp-ssh':
   description       => '%h',
   replace_wildcards => true,
   services          => [
@@ -69,8 +68,8 @@ include ::avahi
 Install Avahi and add a static host entry on behalf of an mDNS-unaware router:
 
 ```puppet
-include ::dbus
-include ::avahi
+include dbus
+include avahi
 
 avahi_host { 'router.local':
   ensure => present,
@@ -83,28 +82,30 @@ avahi_host { 'router.local':
 The reference documentation is generated with
 [puppet-strings](https://github.com/puppetlabs/puppet-strings) and the latest
 version of the documentation is hosted at
-[https://bodgit.github.io/puppet-avahi/](https://bodgit.github.io/puppet-avahi/).
+[https://bodgit.github.io/puppet-avahi/](https://bodgit.github.io/puppet-avahi/)
+and available also in the [REFERENCE.md](https://github.com/bodgit/puppet-avahi/blob/main/REFERENCE.md).
 
 ## Limitations
 
-This module has been built on and tested against Puppet 4.4.0 and higher.
+This module has been built on and tested against Puppet 5 and higher.
 
 The module has been tested on:
 
-* RedHat Enterprise Linux 6/7
-* Ubuntu 14.04/16.04
-* Debian 7/8
-* OpenBSD 6.0
+* Red Hat/CentOS Enterprise Linux 6/7/8
+* Ubuntu 16.04/18.04/20.04
+* Debian 9/10
+* OpenBSD 6.9
 
 ## Development
 
-The module has both [rspec-puppet](http://rspec-puppet.com) and
-[beaker-rspec](https://github.com/puppetlabs/beaker-rspec) tests. Run them
+The module relies on [PDK](https://puppet.com/docs/pdk/1.x/pdk.html) and has
+both [rspec-puppet](http://rspec-puppet.com) and
+[Litmus](https://github.com/puppetlabs/puppet_litmus) tests. Run them
 with:
 
 ```
-$ bundle exec rake test
-$ PUPPET_INSTALL_TYPE=agent PUPPET_INSTALL_VERSION=x.y.z bundle exec rake beaker:<nodeset>
+$ bundle exec rake spec
+$ bundle exec rake litmus:*
 ```
 
 Please log issues or pull requests at
