@@ -80,7 +80,7 @@ class avahi (
   Optional[Boolean]                                 $add_service_cookie              = undef,
   Optional[Array[String, 1]]                        $allow_interfaces                = undef,
   Optional[Boolean]                                 $allow_point_to_point            = undef,
-  Optional[Array[Bodgitlib::Domain, 1]]             $browse_domains                  = undef,
+  Optional[Array[Bodgitlib::Domain, 1]]             $browse_domains                  = $avahi::params::browse_domains,
   Optional[Integer[0]]                              $cache_entries_max               = undef,
   Optional[Boolean]                                 $check_response_ttl              = undef,
   Optional[Integer[0]]                              $clients_max                     = undef,
