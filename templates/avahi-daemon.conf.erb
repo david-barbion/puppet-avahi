@@ -20,7 +20,7 @@ use-ipv6=<%= @use_ipv6 ? 'yes' : 'no' %>
 allow-interfaces=<%= @allow_interfaces.join(', ') %>
 <% end -%>
 <% if @deny_interfaces -%>
-deny-interfaces=<%= @deny_intefaces.join(', ') %>
+deny-interfaces=<%= @deny_interfaces.join(', ') %>
 <% end -%>
 <% unless @check_response_ttl.nil? -%>
 check-response-ttl=<%= @check_response_ttl ? 'yes' : 'no' %>
